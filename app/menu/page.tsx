@@ -66,7 +66,7 @@ export default function MenuPage() {
     }
 
     fetchProducts();
-  }, [selectedCategoryId, setProducts, setFilteredProducts]);
+  }, [selectedCategoryId]);
   
   // Filter products based on search query
   useEffect(() => {
