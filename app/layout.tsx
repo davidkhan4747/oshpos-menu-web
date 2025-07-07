@@ -20,6 +20,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "OSHPOS Restaurant Menu",
   description: "Order delicious food from OshPos Restaurant",
+  icons: {
+    icon: [
+      { url: "/LogoFast Icon (1).png" },
+      { url: "/LogoFast Icon (1).svg" },
+    ],
+    apple: "/LogoFast Icon (1).png",
+  },
 };
 
 export default function RootLayout({

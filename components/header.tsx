@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ShoppingCart, Menu, UtensilsCrossed } from "lucide-react";
+import Image from "next/image";
+import { ShoppingCart, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { ThemeToggle } from "./theme-toggle";
@@ -34,10 +35,15 @@ export function Header() {
         <div className="flex items-center">
           <Link href="/" className="mr-6 flex items-center gap-2 group">
             <div className={cn(
-              "rounded-full p-2 group-hover:scale-110 transition-transform",
-              scrolled ? "bg-primary text-white" : "bg-white text-primary"
+              "rounded-full p-1 group-hover:scale-110 transition-transform relative w-8 h-8 overflow-hidden",
+              scrolled ? "bg-[#fdd7d6]" : "bg-[#fdd7d6]"
             )}>
-              <UtensilsCrossed className="h-5 w-5" />
+              <Image 
+                src="/LogoFast Icon (1).svg" 
+                alt="OshPos Logo" 
+                fill 
+                className="object-contain p-0.5" 
+              />
             </div>
             <span className={cn(
               "text-xl font-bold",
@@ -98,8 +104,13 @@ export function Header() {
             <SheetContent className="w-64 border-l-primary/20">
               <div className="flex flex-col gap-2 mt-8">
                 <div className="flex items-center gap-2 mb-6">
-                  <div className="bg-primary rounded-full p-2 text-white">
-                    <UtensilsCrossed className="h-5 w-5" />
+                  <div className="bg-[#fdd7d6] rounded-full p-1 relative w-8 h-8 overflow-hidden">
+                    <Image 
+                      src="/LogoFast Icon (1).svg" 
+                      alt="OshPos Logo" 
+                      fill 
+                      className="object-contain p-0.5" 
+                    />
                   </div>
                   <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-highlight">OshPos</span>
                 </div>

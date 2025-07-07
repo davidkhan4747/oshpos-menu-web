@@ -77,9 +77,9 @@ export default function Home() {
         </div>
         
         {/* Decorative Elements */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-background/80"></div>
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-background/80"></div>
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary/30 to-transparent opacity-60"></div>
-        
+         */}
         {/* Hero Content */}
         <div className="container relative z-10 flex flex-col items-center text-white px-4">
           <div className="mb-4 inline-block">
@@ -90,7 +90,7 @@ export default function Home() {
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-center leading-tight">
             <span className="block">Ресторан</span>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-accent to-highlight">
+            <span className="bg-clip-text bg-gradient-to-r from-white via-accent to-highlight">
               OSHPOS
             </span>
           </h1>
@@ -101,7 +101,8 @@ export default function Home() {
           
           <div className="flex flex-col sm:flex-row gap-4 items-center">
             <Link href="/menu">
-              <Button size="lg" className="bg-highlight hover:bg-highlight/90 text-white rounded-full px-8 py-6 font-medium text-lg shadow-sm shadow-accent/10 hover:shadow-accent/20 transition-all hover:scale-105">
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 rounded-full px-8 py-6 font-medium text-lg transition-all hover:scale-105">
+
                 Смотреть меню
               </Button>
             </Link>
@@ -222,7 +223,7 @@ export default function Home() {
                 {/* Right side with content */}
                 <div className="w-full md:w-3/5 p-8 md:p-12 order-1 md:order-2 flex flex-col justify-center">
                   <div className="max-w-lg">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-highlight">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text  bg-gradient-to-r from-primary to-highlight">
                       Готовы сделать заказ?
                     </h2>
                     <p className="text-muted-foreground mb-8 text-lg">
@@ -230,7 +231,8 @@ export default function Home() {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4">
                       <Link href="/menu">
-                        <Button className="bg-highlight hover:bg-highlight/90 text-white rounded-full px-8 py-6 font-medium text-lg shadow-sm shadow-accent/10 hover:shadow-accent/20 transition-all hover:scale-105">
+                      <Button variant="outline" className="rounded-full px-8 py-6 border-primary/30 hover:bg-primary/5 font-medium text-lg transition-all">
+
                           Заказать сейчас
                         </Button>
                       </Link>
@@ -248,7 +250,7 @@ export default function Home() {
         </div>
         
         {/* Bottom decorative element */}
-        <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-background to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-background to-transparent"></div>  
       </section>
     </div>
   );

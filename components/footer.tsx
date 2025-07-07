@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Instagram, Facebook, Twitter } from "lucide-react";
 
 export function Footer() {
@@ -10,7 +11,17 @@ export function Footer() {
       <div className="container py-8 px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="font-bold text-lg mb-4">Ресторан OshPos</h3>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="bg-[#fdd7d6] rounded-full p-1 relative w-8 h-8 overflow-hidden">
+                <Image 
+                  src="/LogoFast Icon (1).svg" 
+                  alt="OshPos Logo" 
+                  fill 
+                  className="object-contain p-0.5" 
+                />
+              </div>
+              <h3 className="font-bold text-lg">Ресторан OshPos</h3>
+            </div>
             <p className="text-muted-foreground mb-4">
               Вкусная еда с доставкой до вашей двери. Заказывайте онлайн для быстрого
               и удобного обслуживания.

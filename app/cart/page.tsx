@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Plus, Minus, Trash2, ArrowLeft, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { themeColors } from "@/lib/theme-config";
 
 export default function CartPage() {
+  const router = useRouter();
   const { items, updateQuantity, removeFromCart, clearCart } = useCart();
   const { toast } = useToast();
   const [promoCode, setPromoCode] = useState("");
@@ -22,11 +24,7 @@ export default function CartPage() {
   const total = subtotal + delivery;
 
   const handleCheckout = () => {
-    toast({
-      title: "Оформление заказа",
-      description: "Для оформления заказа потребуется авторизация. Функция скоро будет доступна.",
-      duration: 3000,
-    });
+    router.push('/checkout');
   };
 
   const handleApplyPromo = (e: React.FormEvent) => {
