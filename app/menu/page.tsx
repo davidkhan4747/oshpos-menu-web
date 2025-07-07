@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { CategorySlider } from "@/components/category-slider";
 import { ProductCard } from "@/components/product-card";
@@ -13,7 +13,8 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 
-export default function MenuPage() {
+// Component that uses useSearchParams
+function MenuContent() {
   const searchParams = useSearchParams();
   const initialCategoryId = searchParams.get("category") ? Number(searchParams.get("category")) : null;
   
@@ -174,5 +175,47 @@ export default function MenuPage() {
         )}
       </div>
     </div>
+  );
+}
+
+// Loading fallback component
+function MenuLoading() {
+  return (
+    <div className="container py-6">
+      <div className="content-wrapper">
+        <div className="flex justify-between items-center mb-6">
+          <Skeleton className="h-10 w-32" />
+          <Skeleton className="h-10 w-64" />
+        </div>
+        
+        <div className="sticky top-16 z-30 bg-background/95 backdrop-blur pb-2">
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Skeleton key={i} className="h-10 w-28 flex-shrink-0" />
+            ))}
+          </div>
+        </div>
+        
+        <div className="mt-6 grid-wrapper grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="overflow-hidden">
+              <Skeleton className="w-full aspect-square" />
+              <div className="p-3">
+                <Skeleton className="h-4 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-1/3" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function MenuPage() {
+  return (
+    <Suspense fallback={<MenuLoading />}>
+      <MenuContent />
+    </Suspense>
   );
 }
