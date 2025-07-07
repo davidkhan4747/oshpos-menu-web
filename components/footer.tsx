@@ -62,7 +62,7 @@ export function Footer() {
         </div>
         
         <div className="border-t mt-8 pt-6 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Ресторан OshPos. Все права защищены.</p>
+          <p>© {new Date().getFullYear()} Ресторан OSHPOS. Все права защищены.</p>
         </div>
       </div>
     </footer>

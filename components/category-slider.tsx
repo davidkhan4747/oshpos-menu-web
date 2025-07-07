@@ -47,31 +47,28 @@ export function CategorySlider({
               <TabsTrigger
                 key={category.id}
                 value={category.id.toString()}
-                className="flex-shrink-0 flex flex-col items-center gap-1 data-[state=active]:bg-orange-500/10 px-3 py-2 rounded-xl data-[state=active]:text-orange-600 data-[state=active]:border-orange-500"
+                className="flex-shrink-0 flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-white px-6 py-3 rounded-lg transition-all hover:bg-accent/30 border border-transparent data-[state=active]:border-primary/30 shadow-sm min-w-[100px] justify-center"
               >
-                <div className="w-12 h-12 rounded-full bg-muted relative overflow-hidden">
-                  {category.image && category.image !== "" ? (
+                {category.image && category.image !== "" ? (
+                  <div className="w-5 h-5 relative">
                     <Image
                       src={category.image}
                       alt={category.name}
                       fill
-                      sizes="48px"
-                      className="object-cover"
+                      sizes="20px"
+                      className="object-contain"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        target.style.backgroundColor = "#f1f5f9";
                         target.style.display = "none";
                       }}
                     />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-orange-100 dark:bg-orange-900/30">
-                      <span className="text-lg font-medium text-orange-500">
-                        {category.name.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <span className="text-xs font-medium whitespace-nowrap">
+                  </div>
+                ) : (
+                  <span className="text-lg font-medium data-[state=active]:text-white text-primary">
+                    {category.name.charAt(0).toUpperCase()}
+                  </span>
+                )}
+                <span className="text-sm font-medium whitespace-nowrap">
                   {category.name}
                 </span>
               </TabsTrigger>

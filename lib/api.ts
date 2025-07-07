@@ -8,6 +8,7 @@ export interface ProductType {
   name: string;
   description?: string;
   image?: string | null;
+  logo?: string | null; // Added logo property
   createdAt: string;
   createdBy: number;
   deletedAt: string | null;

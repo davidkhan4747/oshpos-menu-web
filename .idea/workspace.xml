@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b5f3e37-baf3-400e-9fcc-61afb1061eff" name="Changes" comment="" />
+    <list default="true" id="0b5f3e37-baf3-400e-9fcc-61afb1061eff" name="Changes" comment="init project" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,11 +68,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1751199814977</updated>
-      <workItem from="1751199816133" duration="11712000" />
+      <workItem from="1751199816133" duration="19146000" />
     </task>
+    <task id="LOCAL-00001" summary="init project">
+      <option name="closed" value="true" />
+      <created>1751214681602</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1751214681602</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init project" />
+    <option name="LAST_COMMIT_MESSAGE" value="init project" />
   </component>
 </project>

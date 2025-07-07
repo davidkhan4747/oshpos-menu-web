@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "OshPos Restaurant Menu",
+  title: "OSHPOS Restaurant Menu",
   description: "Order delicious food from OshPos Restaurant",
 };
 
