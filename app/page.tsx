@@ -7,10 +7,8 @@ import { ArrowRight, UtensilsCrossed } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ProductType, getProductTypes } from "@/lib/api";
-import { themeColors } from "@/lib/theme-config";
 import { Card, CardContent } from "@/components/ui/card";
 import restaurantImage from "../assets/Buy-Restaurant-barcelona-spain-Top-House-Realty-4.jpg";
-import { cn } from "@/lib/utils";
 
 export default function Home() {
   const [categories, setCategories] = useState<ProductType[]>([]);

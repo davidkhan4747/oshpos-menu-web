@@ -34,7 +34,7 @@ export default function CheckoutPage() {
   
   // Redirect if cart is empty
   useEffect(() => {
-    if (items.length === 0) {
+    if (items.length === 0 && typeof window !== 'undefined') {
       router.push("/cart");
     }
   }, [items, router]);
@@ -103,7 +103,7 @@ export default function CheckoutPage() {
     }
   };
   
-  if (items.length === 0) {
+  if (items.length === 0 && typeof window !== 'undefined') {
     return null; // Will redirect in useEffect
   }
 

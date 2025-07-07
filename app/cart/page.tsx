@@ -11,7 +11,6 @@ import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/lib/cart-context";
 import { useToast } from "@/components/ui/toast";
 import { Card, CardContent } from "@/components/ui/card";
-import { themeColors } from "@/lib/theme-config";
 
 export default function CartPage() {
   const router = useRouter();
