@@ -204,11 +204,21 @@ export default function CheckoutPage() {
                     </div>
                     
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="CARD" id="card" />
-                      <Label htmlFor="card" className="flex items-center cursor-pointer">
-                        <span className="font-medium">Картой</span>
+                      <RadioGroupItem value="PAYME" id="payme" />
+                      <Label htmlFor="payme" className="flex items-center cursor-pointer">
+                        <span className="font-medium">Payme</span>
                         <span className="text-muted-foreground ml-2 text-sm">
-                          (Оплата картой при получении)
+                          (Оплата через Payme)
+                        </span>
+                      </Label>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="CLICK" id="click" />
+                      <Label htmlFor="click" className="flex items-center cursor-pointer">
+                        <span className="font-medium">Click</span>
+                        <span className="text-muted-foreground ml-2 text-sm">
+                          (Оплата через Click)
                         </span>
                       </Label>
                     </div>

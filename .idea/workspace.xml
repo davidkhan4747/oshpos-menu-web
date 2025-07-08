@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b5f3e37-baf3-400e-9fcc-61afb1061eff" name="Changes" comment="fix for deploy error cors">
+    <list default="true" id="0b5f3e37-baf3-400e-9fcc-61afb1061eff" name="Changes" comment="features">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cart/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/cart/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/category-slider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/category-slider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/footer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/product-card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/product-card.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/card.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +84,7 @@
       <option name="presentableId" value="Default" />
       <updated>1751199814977</updated>
       <workItem from="1751199816133" duration="19146000" />
-      <workItem from="1751899257584" duration="9028000" />
+      <workItem from="1751899257584" duration="12581000" />
     </task>
     <task id="LOCAL-00001" summary="init project">
       <option name="closed" value="true" />
@@ -126,7 +118,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751905461406</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="features">
+      <option name="closed" value="true" />
+      <created>1751953922373</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1751953922373</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,6 +143,7 @@
     <MESSAGE value="fix" />
     <MESSAGE value="fix for deploy" />
     <MESSAGE value="fix for deploy error cors" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix for deploy error cors" />
+    <MESSAGE value="features" />
+    <option name="LAST_COMMIT_MESSAGE" value="features" />
   </component>
 </project>

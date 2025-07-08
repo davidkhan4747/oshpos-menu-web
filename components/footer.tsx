@@ -20,7 +20,7 @@ export function Footer() {
                   className="object-contain p-0.5" 
                 />
               </div>
-              <h3 className="font-bold text-lg">Ресторан OSHMENU</h3>
+              <h3 className="font-bold text-lg"> OSHMENU</h3>
             </div>
             <p className="text-muted-foreground mb-4">
               Вкусная еда с доставкой до вашей двери. Заказывайте онлайн для быстрого
@@ -39,7 +39,7 @@ export function Footer() {
             </div>
           </div>
           
-          <div>
+          {/* <div>
             <h3 className="font-bold text-lg mb-4">Быстрые ссылки</h3>
             <nav className="flex flex-col space-y-2">
               <Link href="/" className="text-muted-foreground hover:text-foreground">
@@ -55,25 +55,25 @@ export function Footer() {
                 Мои заказы
               </Link>
             </nav>
-          </div>
+          </div> */}
           
           <div>
             <h3 className="font-bold text-lg mb-4">Связаться с нами</h3>
             <address className="not-italic">
-              <p className="text-muted-foreground">ул. Ресторанная, 123</p>
+              {/* <p className="text-muted-foreground">ул. Ресторанная, 123</p> */}
               <p className="text-muted-foreground">Ташкент, Узбекистан</p>
-              <p className="text-muted-foreground mt-2">
+              {/* <p className="text-muted-foreground mt-2">
                 <a href="tel:+998712345678" className="hover:text-foreground">+998 71 234 56 78</a>
-              </p>
+              </p> */}
               <p className="text-muted-foreground">
-                <a href="mailto:info@oshpos.uz" className="hover:text-foreground">info@oshpos.uz</a>
+                <a href="mailto:info@oshpos.uz" className="hover:text-foreground">info@oshlab.uz</a>
               </p>
             </address>
           </div>
         </div>
         
         <div className="border-t mt-8 pt-6 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Ресторан OSHPOS. Все права защищены.</p>
+          <p>© {new Date().getFullYear()} OSHLAB. Все права защищены.</p>
         </div>
       </div>
     </footer>

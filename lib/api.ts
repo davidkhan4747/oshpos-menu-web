@@ -81,7 +81,7 @@ export interface ClientInfo {
 
 export type PaymentStatus = 'unpaid' | 'paid';
 export type OrderDeliveryType = 'PICKUP' | 'DELIVERY';
-export type PaymentMethod = 'CASH' | 'CARD' | 'ONLINE';
+export type PaymentMethod = 'CASH' | 'PAYME' | 'CLICK' | 'ONLINE';
 
 export interface OrderRequest {
   clientId?: number;

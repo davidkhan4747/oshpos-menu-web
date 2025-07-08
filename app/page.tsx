@@ -276,13 +276,13 @@ export default function Home() {
             Откройте для себя наше вкусное меню и закажите любимые блюда
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 items-center">
-            <Link href="/orders">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 rounded-full px-8 py-6 font-medium text-lg transition-all hover:scale-105">
-                Мои заказы
-              </Button>
-            </Link>
-          </div>
+          {/*<div className="flex flex-col sm:flex-row gap-4 items-center">*/}
+          {/*  <Link href="/orders">*/}
+          {/*    <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 rounded-full px-8 py-6 font-medium text-lg transition-all hover:scale-105">*/}
+          {/*      Мои заказы*/}
+          {/*    </Button>*/}
+          {/*  </Link>*/}
+          {/*</div>*/}
         </div>
         
         {/* Decorative Bottom Curve */}
