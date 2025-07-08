@@ -20,7 +20,7 @@ export function Footer() {
                   className="object-contain p-0.5" 
                 />
               </div>
-              <h3 className="font-bold text-lg">Ресторан OshPos</h3>
+              <h3 className="font-bold text-lg">Ресторан OSHMENU</h3>
             </div>
             <p className="text-muted-foreground mb-4">
               Вкусная еда с доставкой до вашей двери. Заказывайте онлайн для быстрого

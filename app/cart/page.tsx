@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/lib/cart-context";
 import { useToast } from "@/components/ui/toast";
 import { Card, CardContent } from "@/components/ui/card";
+import { getImageUrl } from "@/lib/api";
 
 export default function CartPage() {
   const router = useRouter();
@@ -93,7 +94,7 @@ export default function CartPage() {
                       <div className="w-24 h-24 relative bg-muted rounded-md overflow-hidden flex-shrink-0">
                         {item.files && item.files.length > 0 ? (
                           <Image
-                            src={`https://oshposapi.021.uz/api/file/${item.files[0].id}`}
+                            src={getImageUrl(item) || "/placeholder-image.jpg"}
                             alt={item.name}
                             fill
                             className="object-cover"

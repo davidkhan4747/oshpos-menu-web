@@ -1,18 +1,216 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, UtensilsCrossed } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ProductType, getProductTypes } from "@/lib/api";
-import { Card, CardContent } from "@/components/ui/card";
+import { Product, ProductType, getProductTypes, getProductsByType } from "@/lib/api";
+import { CategorySlider } from "@/components/category-slider";
+import { ProductCard } from "@/components/product-card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { useCart } from "@/lib/cart-context";
 import restaurantImage from "../assets/Buy-Restaurant-barcelona-spain-Top-House-Realty-4.jpg";
 
-export default function Home() {
+// Menu content component
+function HomeMenuContent() {
   const [categories, setCategories] = useState<ProductType[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  const { totalItems, totalPrice } = useCart();
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const data = await getProductTypes();
+        setCategories(data);
+        
+        // If there are categories and no selected category, select the first one
+        if (data.length > 0 && selectedCategoryId === null) {
+          setSelectedCategoryId(data[0].id);
+        }
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      } finally {
+        setLoadingCategories(false);
+      }
+    }
+
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      if (selectedCategoryId === null) {
+        return; // Don't load products if no category is selected
+      }
+      
+      setLoadingProducts(true);
+      try {
+        const data = await getProductsByType(selectedCategoryId);
+        setProducts(data);
+        setFilteredProducts(data);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      } finally {
+        setLoadingProducts(false);
+      }
+    }
+
+    fetchProducts();
+  }, [selectedCategoryId]);
+  
+  // Filter products based on search query
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setFilteredProducts(products);
+      return;
+    }
+    
+    const query = searchQuery.toLowerCase().trim();
+    const filtered = products.filter(product => 
+      product.name.toLowerCase().includes(query) || 
+      (product.description && product.description.toLowerCase().includes(query))
+    );
+    
+    setFilteredProducts(filtered);
+  }, [searchQuery, products]);
+
+  return (
+    <div className="container py-6">
+      <div className="content-wrapper">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+          <h1 className="text-3xl font-bold">Меню</h1>
+          
+          <div className="flex items-center gap-4 w-full md:w-auto">
+            <div className="relative w-full md:w-64">
+              <Input
+                type="text"
+                placeholder="Поиск блюд..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pr-8"
+              />
+              {searchQuery && (
+                <button 
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  onClick={() => setSearchQuery("")}
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+            
+            {totalItems > 0 && (
+              <Link href="/cart" className="flex-shrink-0">
+                <Button className="bg-primary hover:bg-primary/90 gap-2">
+                  <ShoppingCart className="h-4 w-4" />
+                  <span className="hidden sm:inline">Корзина</span>
+                  <Badge className="ml-1 bg-white text-primary">{totalItems}</Badge>
+                </Button>
+              </Link>
+            )}
+          </div>
+        </div>
+        
+        <div className="sticky top-16 z-30 bg-background/95 backdrop-blur pb-2">
+          <CategorySlider 
+            categories={categories}
+            selectedCategory={selectedCategoryId}
+            onSelectCategory={setSelectedCategoryId}
+            isLoading={loadingCategories}
+          />
+        </div>
+        
+        <div className="mt-6">
+          {loadingProducts ? (
+            <div className="grid-wrapper grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="overflow-hidden">
+                  <Skeleton className="w-full aspect-square" />
+                  <div className="p-3">
+                    <Skeleton className="h-4 w-3/4 mb-2" />
+                    <Skeleton className="h-4 w-1/3" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : filteredProducts.length > 0 ? (
+            <div className="grid-wrapper grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 border rounded-lg bg-accent/10">
+              <h3 className="text-xl font-medium mb-2">Товары не найдены</h3>
+              <p className="text-muted-foreground px-4">
+                {searchQuery ? 
+                  `По запросу "${searchQuery}" ничего не найдено.` : 
+                  "В этой категории пока нет товаров."}
+              </p>
+            </div>
+          )}
+        </div>
+        
+        {totalItems > 0 && (
+          <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 md:hidden z-40">
+            <Link href="/cart">
+              <Button className="bg-primary hover:bg-primary/90 shadow-lg gap-2 px-6 py-6 h-auto rounded-full">
+                <ShoppingCart className="h-5 w-5" />
+                <span>Корзина: {totalItems}</span>
+                <span className="font-bold ml-2">{totalPrice.toLocaleString()} сум</span>
+              </Button>
+            </Link>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Loading fallback component
+function HomeMenuLoading() {
+  return (
+    <div className="container py-6">
+      <div className="content-wrapper">
+        <div className="flex justify-between items-center mb-6">
+          <Skeleton className="h-10 w-32" />
+          <Skeleton className="h-10 w-64" />
+        </div>
+        
+        <div className="sticky top-16 z-30 bg-background/95 backdrop-blur pb-2">
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Skeleton key={i} className="h-10 w-28 flex-shrink-0" />
+            ))}
+          </div>
+        </div>
+        
+        <div className="mt-6 grid-wrapper grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="overflow-hidden">
+              <Skeleton className="w-full aspect-square" />
+              <div className="p-3">
+                <Skeleton className="h-4 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-1/3" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -38,21 +236,6 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const data = await getProductTypes();
-        setCategories(data);
-      } catch (error) {
-        console.error("Failed to fetch categories:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchCategories();
-  }, []);
-
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -74,10 +257,6 @@ export default function Home() {
           />
         </div>
         
-        {/* Decorative Elements */}
-        {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-background/80"></div>
-        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary/30 to-transparent opacity-60"></div>
-         */}
         {/* Hero Content */}
         <div className="container relative z-10 flex flex-col items-center text-white px-4">
           <div className="mb-4 inline-block">
@@ -98,12 +277,6 @@ export default function Home() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 items-center">
-            <Link href="/menu">
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 rounded-full px-8 py-6 font-medium text-lg transition-all hover:scale-105">
-
-                Смотреть меню
-              </Button>
-            </Link>
             <Link href="/orders">
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 rounded-full px-8 py-6 font-medium text-lg transition-all hover:scale-105">
                 Мои заказы
@@ -120,135 +293,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="py-16 bg-background relative">
-        {/* Decorative background elements */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -z-10 opacity-70"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10 opacity-50"></div>
-        
-        <div className="container px-4">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <span className="text-highlight font-medium mb-2 inline-block">Наше меню</span>
-              <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
-                Популярные категории
-              </h2>
-            </div>
-            <Link 
-              href="/menu" 
-              className="group flex items-center gap-2 px-6 py-2 rounded-full border border-primary/30 hover:bg-primary/5 transition-all"
-            >
-              <span className="text-primary font-medium">Смотреть все</span>
-              <ArrowRight size={16} className="text-primary group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {loading
-              ? Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="flex flex-col items-center gap-4 p-6 rounded-xl border bg-background">
-                    <Skeleton className="h-28 w-28 rounded-full" />
-                    <Skeleton className="h-5 w-24" />
-                  </div>
-                ))
-              : categories.slice(0, 8).map((category) => (
-                  <Link
-                    key={category.id}
-                    href={`/menu?category=${category.id}`}
-                    className="flex flex-col items-center gap-4 p-6 rounded-xl border bg-background hover:border-primary/30 hover:bg-accent/10 group transition-all"
-                  >
-                    <div className="h-28 w-28 rounded-full overflow-hidden relative bg-muted group-hover:ring-4 ring-accent/30 transition-all">
-                      {category.logo && (
-                        <Image
-                          src={category.logo}
-                          alt={category.name}
-                          fill
-                          sizes="(max-width: 768px) 112px, 112px"
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = "none";
-                          }}
-                        />
-                      )}
-                      {!category.logo && (
-                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-accent/50 to-primary/20 group-hover:from-accent/70 group-hover:to-primary/30 transition-colors">
-                          <span className="text-3xl font-bold text-primary">
-                            {category.name.charAt(0)}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    <span className="font-medium text-center text-lg">{category.name}</span>
-                  </Link>
-                ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 relative overflow-hidden">
-        {/* Decorative background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/10 to-highlight/5 -z-10"></div>
-        <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-background to-transparent"></div>
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl -z-10 opacity-70"></div>
-        
-        <div className="container px-4">
-          <Card className="border-none shadow-md overflow-hidden bg-gradient-to-br from-background via-background to-accent/5">
-            <CardContent className="p-0">
-              <div className="flex flex-col md:flex-row items-stretch">
-                {/* Left side with image */}
-                <div className="relative w-full md:w-2/5 min-h-[300px] md:min-h-0 order-2 md:order-1">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/80 overflow-hidden">
-                    <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.2)_0,_transparent_40%)] animate-[spin_40s_linear_infinite]"></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-white text-opacity-10 flex flex-col items-center">
-                        <UtensilsCrossed className="h-40 w-40" />
-                      </div>
-                    </div>
-                    <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-primary to-transparent"></div>
-                  </div>
-                  <div className="relative h-full flex flex-col items-center justify-center p-10 text-white">
-                    <UtensilsCrossed className="h-16 w-16 mb-4" />
-                    <span className="text-4xl font-bold">OSHPOS</span>
-                    <div className="mt-6 flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-highlight animate-pulse"></div>
-                      <span className="text-sm font-medium">Открыто сейчас</span>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Right side with content */}
-                <div className="w-full md:w-3/5 p-8 md:p-12 order-1 md:order-2 flex flex-col justify-center">
-                  <div className="max-w-lg">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text  bg-gradient-to-r from-primary to-highlight">
-                      Готовы сделать заказ?
-                    </h2>
-                    <p className="text-muted-foreground mb-8 text-lg">
-                      Просмотрите наше меню и сделайте заказ всего в несколько кликов. Наслаждайтесь вкусной едой, когда вам удобно.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      <Link href="/menu">
-                      <Button variant="outline" className="rounded-full px-8 py-6 border-primary/30 hover:bg-primary/5 font-medium text-lg transition-all">
-
-                          Заказать сейчас
-                        </Button>
-                      </Link>
-                      <Link href="/orders">
-                        <Button variant="outline" className="rounded-full px-8 py-6 border-primary/30 hover:bg-primary/5 font-medium text-lg transition-all">
-                          История заказов
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-        
-        {/* Bottom decorative element */}
-        <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-background to-transparent"></div>  
+      {/* Menu Section - Directly after hero */}
+      <section className="bg-background relative">
+        <Suspense fallback={<HomeMenuLoading />}>
+          <HomeMenuContent />
+        </Suspense>
       </section>
     </div>
   );

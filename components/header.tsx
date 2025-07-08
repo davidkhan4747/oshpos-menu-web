@@ -48,15 +48,15 @@ export function Header() {
             <span className={cn(
               "text-xl font-bold",
               scrolled ? "text-primary" : "text-white"
-            )}>OshPos</span>
+            )}>OSHMENU</span>
           </Link>
 
           <nav className="hidden md:flex gap-1">
             {[
               { href: "/", label: "Главная" },
-              { href: "/menu", label: "Меню" },
+              // { href: "/menu", label: "Меню" },
               { href: "/cart", label: "Корзина" },
-              { href: "/orders", label: "Мои заказы" },
+              // { href: "/orders", label: "Мои заказы" },
             ].map((item) => (
               <Link 
                 key={item.href} 
@@ -117,9 +117,9 @@ export function Header() {
                 
                 {[
                   { href: "/", label: "Главная" },
-                  { href: "/menu", label: "Меню" },
+                  // { href: "/menu", label: "Меню" },
                   { href: "/cart", label: "Корзина" },
-                  { href: "/orders", label: "Мои заказы" },
+                  // { href: "/orders", label: "Мои заказы" },
                 ].map((item) => (
                   <Link 
                     key={item.href} 

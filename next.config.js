@@ -24,6 +24,9 @@ const nextConfig = {
       },
     ];
   },
+  images: {
+    domains: ['oshposapi.021.uz'],
+  },
 };
 
 module.exports = nextConfig;

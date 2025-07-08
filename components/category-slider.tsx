@@ -36,39 +36,27 @@ export function CategorySlider({
 
   return (
     <div className="w-full py-2">
-      <div className="w-full overflow-x-auto pb-2 no-scrollbar">
+      <div className="flex gap-3 overflow-x-auto pb-4 no-scrollbar">
         <Tabs 
-          value={selectedCategory ? selectedCategory.toString() : ""}
+          value={selectedCategory ? selectedCategory.toString() : undefined}
           onValueChange={(value) => onSelectCategory(Number(value))}
-          className="w-full"
+          className="flex gap-3"
         >
-          <TabsList className="h-auto p-2 bg-transparent flex gap-3 pl-4 pr-12 md:px-4 min-w-max">
+          <TabsList className="bg-transparent p-0 flex gap-3">
             {categories.map((category) => (
               <TabsTrigger
                 key={category.id}
                 value={category.id.toString()}
-                className="flex-shrink-0 flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-white px-6 py-3 rounded-lg transition-all hover:bg-accent/30 border border-transparent data-[state=active]:border-primary/30 shadow-sm min-w-[100px] justify-center"
+                className="flex-shrink-0 flex items-center 
+                  data-[state=active]:bg-highlight data-[state=active]:text-white 
+                  px-6 py-3 rounded-full transition-all 
+                  hover:bg-accent/20 hover:border-primary/30
+                  border border-accent/30 
+                  data-[state=active]:border-highlight 
+                  shadow-md min-w-fit w-auto
+                  font-medium text-base"
               >
-                {category.image && category.image !== "" ? (
-                  <div className="w-5 h-5 relative">
-                    <Image
-                      src={category.image}
-                      alt={category.name}
-                      fill
-                      sizes="20px"
-                      className="object-contain"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = "none";
-                      }}
-                    />
-                  </div>
-                ) : (
-                  <span className="text-lg font-medium data-[state=active]:text-white text-primary">
-                    {category.name.charAt(0).toUpperCase()}
-                  </span>
-                )}
-                <span className="text-sm font-medium whitespace-nowrap">
+                <span className="whitespace-normal text-center">
                   {category.name}
                 </span>
               </TabsTrigger>

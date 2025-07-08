@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Plus, Minus, ChevronDown, ChevronUp } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
-import { Product } from "@/lib/api";
+import { Product, getImageUrl } from "@/lib/api";
 import { useCart } from "@/lib/cart-context";
 import { Badge } from "./ui/badge";
 import { cn } from "@/lib/utils";
@@ -20,11 +20,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const quantity = cartItem?.quantity || 0;
   const [showDescription, setShowDescription] = useState(false);
   
-  // Проверяем, есть ли файлы изображений
-  const hasImage = product.files && product.files.length > 0;
-  
-  // Базовый URL API для изображений
-  const baseImageUrl = "https://oshposapi.021.uz";
+  // Get image URL using our helper function
+  const imageUrl = getImageUrl(product);
 
   return (
     <Card className="overflow-hidden transition-all hover:border-primary/20 group relative border border-border/50 hover:shadow-lg hover:shadow-accent/5">
@@ -35,9 +32,9 @@ export function ProductCard({ product }: ProductCardProps) {
       )}
       
       <div className="aspect-square relative overflow-hidden bg-muted group-hover:brightness-105 transition-all">
-        {hasImage ? (
+        {imageUrl ? (
           <Image
-            src={`${baseImageUrl}/api/file/${product.files[0].id}`}
+            src={imageUrl}
             alt={product.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -57,7 +54,7 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
       </div>
       
-      <CardContent className="p-4">
+      <CardContent className="px-4 pb-4">
         <div className="flex flex-col gap-3">
           <div className="flex items-start justify-between">
             <div className="flex-1">

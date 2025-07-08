@@ -108,6 +108,16 @@ const api = axios.create({
   }
 });
 
+// Helper function to get image URL from file information
+export const getImageUrl = (product: Product): string | null => {
+  if (product.files && product.files.length > 0) {
+    const file = product.files[0];
+    // Using originalName directly as in the Flutter implementation
+    return `${API_BASE_URL}/file/${file.originalName}`;
+  }
+  return null;
+};
+
 export const getProductTypes = async (): Promise<ProductType[]> => {
   try {
     const response = await api.get('/website/product/product-types');
@@ -131,7 +141,8 @@ export const createOrder = async (orderData: OrderRequest): Promise<OrderRespons
 export const getProductsByType = async (typeId: number): Promise<Product[]> => {
   try {
     const response = await api.get(`/website/product/by-product-type-id/${typeId}`);
-    return response.data.items || response.data; 
+    const products = response.data.items || response.data;
+    return products; 
   } catch (error) {
     console.error(`Error fetching products for type ${typeId}:`, error);
     return [];
